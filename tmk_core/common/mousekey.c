@@ -37,11 +37,8 @@ static uint8_t        mousekey_accel  = 0;
 static uint8_t        mousekey_repeat = 0;
 static uint16_t       last_timer      = 0;
 
-#ifndef MK_3_SPEED
-
-static uint16_t last_timer_c = 0;
-static uint16_t last_timer_w = 0;
-
+// [Patch] Move all below variables to global scope since command.c need to see
+// those vars whatever which mouse mode we set
 /*
  * Mouse keys  acceleration algorithm
  *  http://en.wikipedia.org/wiki/Mouse_keys
@@ -65,6 +62,11 @@ uint8_t mk_wheel_delay = MOUSEKEY_WHEEL_DELAY / 10;
 uint8_t mk_wheel_interval    = MOUSEKEY_WHEEL_INTERVAL;
 uint8_t mk_wheel_max_speed   = MOUSEKEY_WHEEL_MAX_SPEED;
 uint8_t mk_wheel_time_to_max = MOUSEKEY_WHEEL_TIME_TO_MAX;
+
+#ifndef MK_3_SPEED
+
+static uint16_t last_timer_c = 0;
+static uint16_t last_timer_w = 0;
 
 static uint8_t move_unit(void) {
     uint16_t unit;

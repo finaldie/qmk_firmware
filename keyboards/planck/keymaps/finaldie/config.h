@@ -37,9 +37,11 @@
 // Most tactile encoders have detents every 4 stages
 #define ENCODER_RESOLUTION 4
 
-#define TAPPING_TOGGLE 2
-
+// Tap hold
 #define TAPPING_TERM 175
+//#define PERMISSIVE_HOLD
+
+#define TAPPING_TOGGLE 2
 
 // Mouse
 #define MK_3_SPEED

@@ -35,6 +35,52 @@ enum preonic_keycodes {
   BACKLIT
 };
 
+#define FL_1 MO(_GAME)
+#define FL_2 MO(_COLEMAK)
+#define FL_3 MO(_DVORAK)
+#define FL_4 MO(_FINAL)
+#define FL_5 MO(_MOUSE)
+
+#define LT_MINS LT(_LOWER,   KC_MINS) // hold: lower; tap: -
+#define LT_RBRC LT(_COLEMAK, KC_RBRC) // hold: FL_2;  tap: ]
+#define LT_EQL  LT(_RAISE,   KC_EQL)  // hold: raise; tap: =
+#define LT_L3_0 LT(_DVORAK,  KC_0)    // hold: FL_3;  tap: 0
+#define LT_BSLS LT(_FINAL,   KC_BSLS) // hold: FL_4;  tap: '\'
+#define LT_LBRC LT(_GAME,    KC_LBRC) // hold: FL_1;  tap: [
+
+// hold or tap
+#define SFT_CAP LSFT_T(KC_CAPS) // hold: left shift; tap: caps
+#define CTL_ESC LCTL_T(KC_ESC)  // hold: left  ctrl; tap: esc
+#define CTL_BRC RCTL_T(KC_LBRC) // hold: right ctrl; tap: [
+#define GUI_1   RGUI_T(KC_1)    // hold: left   GUI; tap: 1
+
+// Tap Dance
+enum {
+  TD_SCLN_QUOT = 0, // in use
+  TD_O_MINS,
+  TD_P_EQL,
+  TD_RP_UNDER,
+};
+
+// Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for ; twice for '
+  [TD_SCLN_QUOT] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_QUOT),
+
+  [TD_O_MINS]    = ACTION_TAP_DANCE_DOUBLE(KC_O, KC_MINS),
+  [TD_P_EQL]     = ACTION_TAP_DANCE_DOUBLE(KC_P, KC_EQL),
+
+  // Tap once for ) twice for _
+  [TD_RP_UNDER]  = ACTION_TAP_DANCE_DOUBLE(KC_RPRN, KC_UNDS),
+
+  // Other declarations would go here, separated by commas, if you have them
+};
+
+#define TD_SQ TD(TD_SCLN_QUOT)
+#define TD_OM TD(TD_O_MINS)
+#define TD_PE TD(TD_P_EQL)
+#define TD_RU TD(TD_RP_UNDER)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -43,19 +89,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * | Ctrl | Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  CTL_BRC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Colemak
